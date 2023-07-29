@@ -1,12 +1,15 @@
 "use client";
 
 import React from "react";
-import { ProjectsDocument, ProjectsQuery } from "@/generated/graphql";
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { useProjectsQuery } from "@/generated/graphql";
 import ProjectCard from "../ProjectCard";
 
 const ProjectListClient = () => {
-  const { data } = useSuspenseQuery<ProjectsQuery>(ProjectsDocument);
+  const { data, loading } = useProjectsQuery();
+
+  if (loading) {
+    return <div> Loading...</div>;
+  }
 
   return (
     <div>

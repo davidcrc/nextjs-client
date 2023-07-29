@@ -1,0 +1,9 @@
+mutation CreateProject($name: String!, $description: String) {
+  createProject(name: $name, description: $description) {
+    uuid
+    name
+    description
+    createdAt
+    updatedAt
+  }
+}

@@ -21,7 +21,7 @@ import { loadEnvConfig } from "@next/env";
 loadEnvConfig(process.cwd());
 
 const config: CodegenConfig = {
-  schema: `${process.env.DB_HOST}/graphql`,
+  schema: `${process.env.NEXT_PUBLIC_URL_SERVER_GRAPHQL}/graphql`,
   documents: ["./src/graphql/**/*.graphql"],
   generates: {
     "./src/generated/graphql.ts": {
@@ -57,8 +57,8 @@ const { data, loading, error } = await getClient().query({
 });
 ```
 
-- and for client components, use loading.tsx to display load:
+- and for client components:
 
 ```ts
-const { data } = useSuspenseQuery<ProjectsQuery>(ProjectsDocument);
+const { data, loading } = useProjectsQuery();
 ```
