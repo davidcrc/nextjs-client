@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { ProjectForm, ProjectListClient } from "@/components/index";
 
 const Projects = async () => {
