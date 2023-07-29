@@ -2,7 +2,7 @@ import React from "react";
 import { Project } from "@/generated/graphql";
 import Link from "next/link";
 
-const ProjectCard = ({ project }: { project?: any }) => {
+const ProjectCard = ({ project }: { project?: Project }) => {
   return (
     <Link href={`/projects/${project?.uuid}`}>
       <div className="hover:bg-slate-400">

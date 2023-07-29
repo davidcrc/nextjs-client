@@ -103,6 +103,8 @@ export type Task = {
   uuid: Scalars['ID']['output'];
 };
 
+export type ProjectFragment = { __typename?: 'Project', uuid: string, name: string, description?: string | null, createdAt: any, updatedAt: any, tasks?: Array<{ __typename?: 'Task', uuid: string, title: string, projectId: string } | null> | null };
+
 export type CreateProjectMutationVariables = Exact<{
   name: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
@@ -110,6 +112,14 @@ export type CreateProjectMutationVariables = Exact<{
 
 
 export type CreateProjectMutation = { __typename?: 'Mutation', createProject?: { __typename?: 'Project', uuid: string, name: string, description?: string | null, createdAt: any, updatedAt: any } | null };
+
+export type CreateTaskMutationVariables = Exact<{
+  title: Scalars['String']['input'];
+  projectId: Scalars['ID']['input'];
+}>;
+
+
+export type CreateTaskMutation = { __typename?: 'Mutation', createTask?: { __typename?: 'Task', uuid: string, title: string, projectId: string, createdAt: any, updatedAt: any, Project?: { __typename?: 'Project', uuid: string, name: string, description?: string | null, createdAt: any, updatedAt: any, tasks?: Array<{ __typename?: 'Task', uuid: string, title: string, projectId: string } | null> | null } | null } | null };
 
 export type ProjectQueryVariables = Exact<{
   projectId: Scalars['ID']['input'];
@@ -121,9 +131,22 @@ export type ProjectQuery = { __typename?: 'Query', project?: { __typename?: 'Pro
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', uuid: string, name: string, description?: string | null, createdAt: any, updatedAt: any, tasks?: Array<{ __typename?: 'Task', uuid: string, title: string } | null> | null } | null> | null };
+export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', uuid: string, name: string, description?: string | null, createdAt: any, updatedAt: any, tasks?: Array<{ __typename?: 'Task', uuid: string, title: string, projectId: string } | null> | null } | null> | null };
 
-
+export const ProjectFragmentDoc = gql`
+    fragment Project on Project {
+  uuid
+  name
+  description
+  tasks {
+    uuid
+    title
+    projectId
+  }
+  createdAt
+  updatedAt
+}
+    `;
 export const CreateProjectDocument = gql`
     mutation CreateProject($name: String!, $description: String) {
   createProject(name: $name, description: $description) {
@@ -162,22 +185,54 @@ export function useCreateProjectMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateProjectMutationHookResult = ReturnType<typeof useCreateProjectMutation>;
 export type CreateProjectMutationResult = Apollo.MutationResult<CreateProjectMutation>;
 export type CreateProjectMutationOptions = Apollo.BaseMutationOptions<CreateProjectMutation, CreateProjectMutationVariables>;
-export const ProjectDocument = gql`
-    query Project($projectId: ID!) {
-  project(projectId: $projectId) {
+export const CreateTaskDocument = gql`
+    mutation CreateTask($title: String!, $projectId: ID!) {
+  createTask(title: $title, projectId: $projectId) {
     uuid
-    name
-    description
-    tasks {
-      uuid
-      title
-      projectId
+    title
+    projectId
+    Project {
+      ...Project
     }
     createdAt
     updatedAt
   }
 }
-    `;
+    ${ProjectFragmentDoc}`;
+export type CreateTaskMutationFn = Apollo.MutationFunction<CreateTaskMutation, CreateTaskMutationVariables>;
+
+/**
+ * __useCreateTaskMutation__
+ *
+ * To run a mutation, you first call `useCreateTaskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTaskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTaskMutation, { data, loading, error }] = useCreateTaskMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      projectId: // value for 'projectId'
+ *   },
+ * });
+ */
+export function useCreateTaskMutation(baseOptions?: Apollo.MutationHookOptions<CreateTaskMutation, CreateTaskMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTaskMutation, CreateTaskMutationVariables>(CreateTaskDocument, options);
+      }
+export type CreateTaskMutationHookResult = ReturnType<typeof useCreateTaskMutation>;
+export type CreateTaskMutationResult = Apollo.MutationResult<CreateTaskMutation>;
+export type CreateTaskMutationOptions = Apollo.BaseMutationOptions<CreateTaskMutation, CreateTaskMutationVariables>;
+export const ProjectDocument = gql`
+    query Project($projectId: ID!) {
+  project(projectId: $projectId) {
+    ...Project
+  }
+}
+    ${ProjectFragmentDoc}`;
 
 /**
  * __useProjectQuery__
@@ -209,19 +264,10 @@ export type ProjectQueryResult = Apollo.QueryResult<ProjectQuery, ProjectQueryVa
 export const ProjectsDocument = gql`
     query Projects {
   projects {
-    uuid
-    name
-    description
-    tasks {
-      uuid
-      title
-    }
-    description
-    createdAt
-    updatedAt
+    ...Project
   }
 }
-    `;
+    ${ProjectFragmentDoc}`;
 
 /**
  * __useProjectsQuery__

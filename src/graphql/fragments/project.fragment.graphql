@@ -1,0 +1,12 @@
+fragment Project on Project {
+  uuid
+  name
+  description
+  tasks {
+    uuid
+    title
+    projectId
+  }
+  createdAt
+  updatedAt
+}

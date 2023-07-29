@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useProjectsQuery } from "@/generated/graphql";
+import { Project, useProjectsQuery } from "@/generated/graphql";
 import ProjectCard from "../ProjectCard";
 
 const ProjectListClient = () => {
@@ -14,7 +14,12 @@ const ProjectListClient = () => {
   return (
     <div>
       {data?.projects?.map((project, index) => {
-        return <ProjectCard key={project?.uuid || index} project={project} />;
+        return (
+          <ProjectCard
+            key={project?.uuid || index}
+            project={project as Project}
+          />
+        );
       })}
     </div>
   );

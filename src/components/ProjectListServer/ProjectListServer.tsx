@@ -1,6 +1,6 @@
 import React from "react";
 import { getClient } from "@/lib/client";
-import { ProjectsDocument, ProjectsQuery } from "@/generated/graphql";
+import { Project, ProjectsDocument, ProjectsQuery } from "@/generated/graphql";
 import ProjectCard from "../ProjectCard";
 
 const ProjectListServer = async () => {
@@ -11,7 +11,12 @@ const ProjectListServer = async () => {
   return (
     <div>
       {data?.projects?.map((project, index) => {
-        return <ProjectCard key={project?.uuid || index} project={project} />;
+        return (
+          <ProjectCard
+            key={project?.uuid || index}
+            project={project as Project}
+          />
+        );
       })}
     </div>
   );

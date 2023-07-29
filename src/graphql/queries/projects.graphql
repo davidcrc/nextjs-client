@@ -1,14 +1,5 @@
 query Projects {
   projects {
-    uuid
-    name
-    description
-    tasks {
-      uuid
-      title
-    }
-    description
-    createdAt
-    updatedAt
+    ...Project
   }
 }

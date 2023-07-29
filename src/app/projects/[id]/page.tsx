@@ -31,14 +31,21 @@ const ProjectDetails = ({ params }: ProjectDetailsProps) => {
   console.log("details", data);
 
   return (
-    <div>
-      <h1>{data?.project?.name}</h1>
-      <h1>{data?.project?.description}</h1>
+    <div className="flex flex-col gap-4">
+      <div>
+        <h1>{data?.project?.name}</h1>
+        <h1>{data?.project?.description}</h1>
 
-      <button className="bg-red-600 px-4 py-2">Delete</button>
+        <button className="bg-red-600 px-4 py-2">Delete</button>
+      </div>
 
       <TaskForm />
-      <TaskList tasks={(data?.project?.tasks as Task[]) ?? []} />
+
+      <div>
+        <h2> Tasks : </h2>
+
+        <TaskList tasks={(data?.project?.tasks as Task[]) ?? []} />
+      </div>
     </div>
   );
 };
