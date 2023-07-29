@@ -4,6 +4,7 @@ import {
   Task,
   useDeleteTaskMutation,
 } from "@/generated/graphql";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const TaskCard = ({ task }: { task: Task }) => {
   const [deleteTaskMutation] = useDeleteTaskMutation();
@@ -27,10 +28,10 @@ const TaskCard = ({ task }: { task: Task }) => {
   };
 
   return (
-    <div>
-      <h2>{task.title}</h2>
-      <button className="bg-red-600 px-4 py-2" onClick={handleDeleteTask}>
-        Delete
+    <div className="bg-zinc-900 px-5 py-3 flex gap-2 justify-between justify-center ">
+      <h2 className="self-center">{task.title}</h2>
+      <button className="bg-zinc-700 px-3 py-2" onClick={handleDeleteTask}>
+        <AiOutlineDelete className="text-red-600" />
       </button>
     </div>
   );

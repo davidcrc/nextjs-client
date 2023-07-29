@@ -51,7 +51,7 @@ const TaskForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 max-w-md"
+      className="flex flex-col gap-3 max-w-md"
     >
       <Controller
         name="title"
@@ -61,14 +61,14 @@ const TaskForm = () => {
             {...field}
             placeholder="write a name"
             type="text"
-            className="text-black"
+            className="bg-zinc-900 text-white rounded-lg p-2 block w-full"
           />
         )}
       />
 
       <button
         type="submit"
-        className="bg-green-600 text-gray-800 disabled:bg-slate-400 "
+        className="bg-green-600 text-gray-800 disabled:bg-slate-400 p-2 rounded-lg"
         disabled={loading}
       >
         {loading ? "adding task" : "Add task"}

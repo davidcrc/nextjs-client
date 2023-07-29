@@ -8,6 +8,8 @@ import {
 } from "@/generated/graphql";
 import { TaskList, TaskForm } from "@/components/Tasks";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import { BiArrowBack } from "react-icons/bi";
 
 const ProjectDetails = () => {
   const params = useParams();
@@ -47,15 +49,22 @@ const ProjectDetails = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div>
-        <h1>{data?.project?.name}</h1>
-        <h1>{data?.project?.description}</h1>
-
-        <button className="bg-red-600 px-4 py-2" onClick={handleDeleteProject}>
-          Delete
-        </button>
+    <div className="flex flex-col gap-4 w-full max-w-2xl ">
+      <Link href={"/projects"}>
+        <BiArrowBack className="text-2xl" />
+      </Link>
+      <div className="bg-zinc-900 mb-2 p-10 flex justify-between ">
+        <div>
+          <h1 className="text-2xl">{data?.project?.name}</h1>
+          <p>{data?.project?.description}</p>
+        </div>
       </div>
+      <button
+        className="bg-red-500 px-3 py-2 w-fit"
+        onClick={handleDeleteProject}
+      >
+        Delete
+      </button>
 
       <TaskForm />
 

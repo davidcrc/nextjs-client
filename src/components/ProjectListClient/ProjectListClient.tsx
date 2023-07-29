@@ -12,7 +12,7 @@ const ProjectListClient = () => {
   }
 
   return (
-    <div>
+    <div className="flex-1 overflow-y-auto  w-full px-5">
       {data?.projects?.map((project, index) => {
         return (
           <ProjectCard

@@ -49,7 +49,7 @@ const ProjectForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 max-w-md"
+      className="flex flex-col px-5 md:px-0 gap-4 w-2/5 max-w-md w-full"
     >
       <Controller
         name="name"
@@ -59,7 +59,7 @@ const ProjectForm = () => {
             {...field}
             placeholder="write a name"
             type="text"
-            className="text-black"
+            className="bg-zinc-800 text-white rounded-lg shadow-lg p-4 block w-full"
           />
         )}
       />
@@ -73,13 +73,13 @@ const ProjectForm = () => {
             name="description"
             rows={3}
             placeholder="Write a description"
-            className="text-black"
+            className="bg-zinc-800 text-white rounded-lg shadow-lg p-4 block w-full"
           ></textarea>
         )}
       />
 
       <button
-        className="bg-green-600 text-gray-800 disabled:bg-slate-400 "
+        className="bg-green-600 text-gray-800 disabled:bg-slate-400 px-4 py-1 rounded-md "
         disabled={!nameWatch || loading}
       >
         Save
