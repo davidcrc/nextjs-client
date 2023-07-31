@@ -2,6 +2,7 @@
 
 import React from "react";
 import {
+  ProjectsDocument,
   Task,
   useDeleteProjectMutation,
   useProjectQuery,
@@ -31,6 +32,13 @@ const ProjectDetails = () => {
         variables: {
           projectId,
         },
+        // TODO: to get projects again , maybe better is update cache
+        refetchQueries: [
+          {
+            query: ProjectsDocument,
+          },
+          "GetProjects",
+        ],
       });
 
       // TODO: push notification successfully removed project
@@ -49,28 +57,29 @@ const ProjectDetails = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-2xl ">
-      <Link href={"/projects"}>
-        <BiArrowBack className="text-2xl" />
-      </Link>
-      <div className="bg-zinc-900 mb-2 p-10 flex justify-between ">
+    <div className="flex flex-col gap-4 w-full max-w-2xl h-full pt-2 ">
+      <div className="flex justify-between ">
+        <Link href={"/projects"}>
+          <BiArrowBack className="text-2xl" />
+        </Link>
+        <button
+          className="hover:bg-red-600 bg-red-500 px-2 py-1 w-fit text-sm"
+          onClick={handleDeleteProject}
+        >
+          Delete
+        </button>
+      </div>
+      <div className="bg-zinc-900 mb-2 p-10 flex flex-col gap-4 justify-between ">
         <div>
           <h1 className="text-2xl">{data?.project?.name}</h1>
-          <p>{data?.project?.description}</p>
+          <p className="italic">{data?.project?.description}</p>
         </div>
       </div>
-      <button
-        className="bg-red-500 px-3 py-2 w-fit"
-        onClick={handleDeleteProject}
-      >
-        Delete
-      </button>
 
       <TaskForm />
 
-      <div>
-        <h2> Tasks : </h2>
-
+      <h2> Tasks : </h2>
+      <div className="h-full overflow-y-auto pb-2">
         <TaskList tasks={(data?.project?.tasks as Task[]) ?? []} />
       </div>
     </div>

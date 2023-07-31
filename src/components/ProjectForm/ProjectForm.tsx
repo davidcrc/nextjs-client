@@ -49,7 +49,7 @@ const ProjectForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col px-5 md:px-0 gap-4 max-w-md w-full"
+      className="flex flex-col px-5 lg:px-0 gap-4 max-w-md w-full"
     >
       <Controller
         name="name"

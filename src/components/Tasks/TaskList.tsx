@@ -7,12 +7,20 @@ interface TaskList {
 }
 
 const TaskList = ({ tasks }: TaskList) => {
+  if (!tasks.length) {
+    return (
+      <p className="text-gray-300 italic text-sm">
+        There is no tasks, add some tasks :D{" "}
+      </p>
+    );
+  }
+
   return (
-    <div>
+    <>
       {tasks.map((task, index) => {
         return <TaskCard key={task?.uuid || index} task={task} />;
       })}
-    </div>
+    </>
   );
 };
 

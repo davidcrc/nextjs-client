@@ -22,7 +22,7 @@ const TaskForm = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (!projectId) return;
+    if (!projectId || !data.title) return;
 
     try {
       await createTaskMutation({
@@ -59,7 +59,7 @@ const TaskForm = () => {
         render={({ field }) => (
           <input
             {...field}
-            placeholder="write a name"
+            placeholder="write a task"
             type="text"
             className="bg-zinc-900 text-white rounded-lg p-2 block w-full"
           />
@@ -68,7 +68,7 @@ const TaskForm = () => {
 
       <button
         type="submit"
-        className="bg-green-600 text-gray-800 disabled:bg-slate-400 p-2 rounded-lg"
+        className="bg-green-600 text-gray-800 hover:bg-green-500  disabled:bg-slate-400 p-2 rounded-lg"
         disabled={loading}
       >
         {loading ? "adding task" : "Add task"}
